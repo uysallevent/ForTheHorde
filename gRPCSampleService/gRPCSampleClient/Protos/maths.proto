@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option csharp_namespace = "gRPCSampleService.Protos";
+
+package Quiz;
+
+service Maths {
+  rpc AskQuestion (QuestionRequest) returns (stream AnswerReply);
+}
+
+message QuestionRequest {
+  repeated string texts = 1;
+}
+
+
+message AnswerReply {
+  string question = 1;
+  double answer=2;
+}
