@@ -2,20 +2,21 @@
 using RabbitMQ.Client.Events;
 using System;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
-namespace RidingWithRabbit.Consumer
+namespace RidingWithRabbit.Test
 {
     class Program
     {
         static void Main(string[] args)
         {
+
             var connectionFactory = new ConnectionFactory() { HostName = "localhost" };
             using var connection = connectionFactory.CreateConnection();
             using var channel = connection.CreateModel();
 
 
-            channel.QueueDeclare(queue: "clock",
+            channel.QueueDeclare(queue: "commands",
                                     durable: false,
                                     exclusive: false,
                                     autoDelete: false,
@@ -26,10 +27,10 @@ namespace RidingWithRabbit.Consumer
             {
                 var body = e.Body;
                 var message = Encoding.UTF8.GetString(body.ToArray());
-                var remote = Convert.ToInt64(message);
-                Console.WriteLine($"Local Time: {DateTime.Now.ToString("HH:mm:ss:fff")}{Environment.NewLine}Remote Time: {DateTime.FromBinary(remote).ToString("HH:mm:ss:fff")}");
+                Console.WriteLine($"{message}");
+                Thread.Sleep(500);
             };
-            channel.BasicConsume(queue: "clock",
+            channel.BasicConsume(queue: "commands",
                                  autoAck: true,
                                  consumer: reader);
 
