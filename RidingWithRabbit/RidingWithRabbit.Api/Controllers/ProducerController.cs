@@ -16,7 +16,7 @@ namespace RidingWithRabbit.Api.Controllers
     public class ProducerController : ControllerBase
     {
         private EventHandler<string> _eventHandler;
-        private System.Timers.Timer _timer;
+        private Timer _timer;
         private IModel _channel;
 
         [HttpGet]
@@ -55,13 +55,14 @@ namespace RidingWithRabbit.Api.Controllers
             var now = DateTime.Now;
             var message = now.ToBinary().ToString();
             WriteLinePos(now.ToString(), 0, 10);
-            Basic("clock",message);
+            Basic("clock", message);
             Console.WriteLine($"'{message}' has sent");
         }
 
-        private void Basic(string routingKey,string message)
+        private void Basic(string routingKey, string message)
         {
-            _channel.BasicPublish(exchange: "",
+            _channel.BasicPublish(
+                     exchange: ExchangeType.Fanout,
                      routingKey: routingKey,
                      basicProperties: null,
                      body: Encoding.UTF8.GetBytes(message));

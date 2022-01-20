@@ -20,6 +20,7 @@ namespace RidingWithRabbit.Consumer
                                     exclusive: false,
                                     autoDelete: false,
                                     arguments: null);
+            channel.BasicQos(0, 1, false);
 
             var reader = new EventingBasicConsumer(channel);
             reader.Received += (m, e) =>
