@@ -4,7 +4,7 @@ using MassTransit;
 
 Console.Title = "ThidrParty";
 
-var bus = BusConfigurator.ConfigureBus((cfg, host) =>
+var bus = BusConfigurator.ConfigureBus((cfg) =>
 {
     cfg.ReceiveEndpoint(RabbitMqConsts.ThirdPartyServiceQueue, e =>
     {

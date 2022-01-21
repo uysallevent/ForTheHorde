@@ -5,7 +5,7 @@ using MassTransit;
 
 Console.Title = "Register";
 
-var bus = BusConfigurator.ConfigureBus((cfg, host) =>
+var bus = BusConfigurator.ConfigureBus((cfg) =>
 {
     cfg.ReceiveEndpoint(RabbitMqConsts.RegisterDemandServiceQueue, e =>
     {

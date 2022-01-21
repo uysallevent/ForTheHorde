@@ -4,7 +4,7 @@ using MassTransit;
 
 Console.Title = "Notification";
 
-var bus = BusConfigurator.ConfigureBus((cfg, host) =>
+var bus = BusConfigurator.ConfigureBus((cfg) =>
 {
 
     cfg.ReceiveEndpoint(RabbitMqConsts.NotificationServiceQueue, e =>
